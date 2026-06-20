@@ -104,9 +104,11 @@ function initFirebase() {
     }
 
     if (serviceAccount) {
-      admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount)
-      });
+      if (admin.apps.length === 0) {
+        admin.initializeApp({
+          credential: admin.credential.cert(serviceAccount)
+        });
+      }
       firestore = admin.firestore();
       firebaseInitialized = true;
       console.log(">>> Firebase Connection: SUCCESS (Connected to cloud Firestore)");
