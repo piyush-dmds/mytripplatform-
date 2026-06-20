@@ -110,6 +110,11 @@ function initFirebase() {
         });
       }
       firestore = admin.firestore();
+      try {
+        firestore.settings({ preferRest: true });
+      } catch (settingsError) {
+        console.warn("Firestore settings already configured or failed:", settingsError.message);
+      }
       firebaseInitialized = true;
       console.log(">>> Firebase Connection: SUCCESS (Connected to cloud Firestore)");
       seedFirebaseData();
