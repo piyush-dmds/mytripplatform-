@@ -27,6 +27,22 @@ app.post('/api/auth/login', loginUser);
 app.post('/api/auth/google-login', googleLogin);
 app.get('/api/auth/me', authenticateToken, getMe);
 
+app.get('/api/debug', async (req, res) => {
+  try {
+    const firebaseActive = db.isFirebaseActive();
+    res.json({
+      firebaseActive,
+      env: {
+        NODE_ENV: process.env.NODE_ENV,
+        VERCEL: process.env.VERCEL,
+        HAS_SERVICE_ACCOUNT_ENV: !!process.env.FIREBASE_SERVICE_ACCOUNT
+      }
+    });
+  } catch (e) {
+    res.status(500).json({ error: e.message, stack: e.stack });
+  }
+});
+
 // Public Trips Endpoint
 app.get('/api/trips', async (req, res) => {
   try {
