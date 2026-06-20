@@ -43,13 +43,39 @@ app.get('/api/debug', async (req, res) => {
   }
 });
 
+app.get('/api/test-firestore', async (req, res) => {
+  try {
+    const firebaseActive = db.isFirebaseActive();
+    if (!firebaseActive) {
+      return res.json({ status: "Firebase not active" });
+    }
+    
+    const adminModule = (await import('firebase-admin')).default;
+    const firestore = adminModule.firestore();
+    const snapshot = await firestore.collection('trips').limit(1).get();
+    
+    res.json({
+      status: "success",
+      count: snapshot.size,
+      docs: snapshot.docs.map(d => ({ id: d.id, data: d.data() }))
+    });
+  } catch (e) {
+    res.status(500).json({
+      status: "error",
+      message: e.message,
+      stack: e.stack
+    });
+  }
+});
+
 // Public Trips Endpoint
 app.get('/api/trips', async (req, res) => {
   try {
     const trips = await db.getTrips();
     res.json(trips);
   } catch (error) {
-    res.status(500).json({ error: 'Server error fetching trips.' });
+    console.error("Error fetching trips:", error);
+    res.status(500).json({ error: 'Server error fetching trips.', details: error.message, stack: error.stack });
   }
 });
 
