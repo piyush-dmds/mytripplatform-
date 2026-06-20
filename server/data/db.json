@@ -1,0 +1,93 @@
+{
+  "users": [
+    {
+      "id": "admin-id-123",
+      "username": "admin",
+      "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+      "name": "Platform Admin",
+      "phone": "6200851221",
+      "address": "Bhabua Nagar Parishad, Ward No. 11",
+      "role": "admin",
+      "createdAt": "2026-06-20T08:03:37.342Z"
+    },
+    {
+      "id": "usr-1l1vz8ln1",
+      "username": "admin123",
+      "password": "cdc33ea5f844929427df40e2f2bf2078cd07a73fd86ff89498b21ca482f6e703",
+      "name": "dmds Marketting",
+      "phone": "7369020990",
+      "address": "delhi55hut",
+      "role": "user",
+      "createdAt": "2026-06-20T08:06:31.750Z"
+    },
+    {
+      "id": "usr-mockgoogle123",
+      "username": "googleuser",
+      "password": "4680eeda5c5ae8cfc3c40145571f24f044a7c9b8f9aeceef2d34889dae886a15",
+      "name": "Rohit Kumar (Google)",
+      "phone": "",
+      "address": "",
+      "role": "user",
+      "createdAt": "2026-06-20T08:38:41.068Z"
+    }
+  ],
+  "bookings": [],
+  "trips": [
+    {
+      "id": "trip-nepal",
+      "title": "Bhabua to Nepal Tour (जनकपुर-काठमांडू-पोखरा दर्शन)",
+      "destination": "Nepal",
+      "startDate": "2026-06-25",
+      "endDate": "2026-07-02",
+      "price": 8999,
+      "busType": "AC Volvo Luxury Bus",
+      "totalSeats": 65,
+      "status": "upcoming",
+      "description": "Experience the ultimate Nepal pilgrimage and sightseeing tour. Visit Mother Janaki Temple in Janakpur, Pashupatinath Temple in Kathmandu, and enjoy beautiful lakes in Pokhara.",
+      "descriptionHi": "नेपाल यात्रा और दर्शन का संपूर्ण अनुभव। जनकपुर में माता जानकी मंदिर दर्शन, काठमांडू में पशुपतिनाथ मंदिर और स्वयंभूनाथ के दर्शन, तथा पोखरा की वादियों और फेवा झील की सैर।",
+      "createdAt": "2026-06-20T08:21:13.103Z"
+    },
+    {
+      "id": "trip-kedarnath",
+      "title": "Bhabua to Kedarnath Dham Darshan",
+      "destination": "Kedarnath",
+      "startDate": "2026-07-10",
+      "endDate": "2026-07-18",
+      "price": 15499,
+      "busType": "AC Volvo Luxury Bus",
+      "totalSeats": 65,
+      "status": "upcoming",
+      "description": "A sacred journey from Bhabua to the holy Kedarnath temple in Uttarakhand. Includes hotel stay, transit, food, and guide support.",
+      "descriptionHi": "उत्तराखंड के पवित्र केदारनाथ धाम की मंगलमय तीर्थ यात्रा। इसमें होटल प्रवास, बस यात्रा, भोजन और गाइड सहायता शामिल है।",
+      "createdAt": "2026-06-20T08:21:13.103Z"
+    },
+    {
+      "id": "trip-amarnath",
+      "title": "Bhabua to Shri Amarnath Yatra",
+      "destination": "Amarnath",
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-04",
+      "price": 18999,
+      "busType": "AC Volvo Luxury Bus",
+      "totalSeats": 65,
+      "status": "upcoming",
+      "description": "Embark on the divine spiritual journey to Baba Barfani Amarnath Cave. Hotel stays, medical assistance support, and registration guidance included.",
+      "descriptionHi": "बाबा बर्फानी अमरनाथ गुफा की पावन यात्रा। होटल में ठहरने की व्यवस्था, मेडिकल सपोर्ट और यात्रा रजिस्ट्रेशन सहायता शामिल है।",
+      "createdAt": "2026-06-20T08:21:13.103Z"
+    },
+    {
+      "id": "trip-sikkim",
+      "title": "Bhabua to Sikkim Gangtok Scenic Tour",
+      "destination": "Sikkim Gangtok",
+      "startDate": "2026-08-10",
+      "endDate": "2026-08-17",
+      "price": 12999,
+      "busType": "AC Volvo Luxury Bus",
+      "totalSeats": 65,
+      "status": "upcoming",
+      "description": "Explore the stunning landscapes of Sikkim, Gangtok, Tsomgo Lake, and Baba Mandir with AC sleeper comfort.",
+      "descriptionHi": "सिक्किम, गंगटोक, त्सोमगो झील और बाबा मंदिर की सुंदर वादियों की सैर, आरामदेह AC स्लीपर बस के सफर के साथ।",
+      "createdAt": "2026-06-20T08:21:13.103Z"
+    }
+  ]
+}
