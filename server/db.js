@@ -2,10 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import admin from 'firebase-admin';
+import { fileURLToPath } from 'url';
 
-const DATA_DIR = path.join(process.cwd(), 'server', 'data');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const DATA_DIR = path.join(__dirname, 'data');
 const DB_FILE = path.join(DATA_DIR, 'db.json');
-const KEY_FILE = path.join(process.cwd(), 'firebase-key.json');
+const KEY_FILE = path.join(__dirname, '..', 'firebase-key.json');
 
 // Password hashing
 export function hashPassword(password) {
@@ -88,11 +92,18 @@ const initialAdmin = {
 let firebaseInitialized = false;
 let firestore = null;
 
-// Initialize Firebase Admin if key is available
+// Initialize Firebase Admin
 function initFirebase() {
-  if (fs.existsSync(KEY_FILE)) {
-    try {
-      const serviceAccount = JSON.parse(fs.readFileSync(KEY_FILE, 'utf-8'));
+  try {
+    let serviceAccount = null;
+
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    } else if (fs.existsSync(KEY_FILE)) {
+      serviceAccount = JSON.parse(fs.readFileSync(KEY_FILE, 'utf-8'));
+    }
+
+    if (serviceAccount) {
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
       });
@@ -100,16 +111,14 @@ function initFirebase() {
       firebaseInitialized = true;
       console.log(">>> Firebase Connection: SUCCESS (Connected to cloud Firestore)");
       seedFirebaseData();
-    } catch (e) {
-      console.error(">>> Firebase Connection: FAILED. Service account file error.", e);
+    } else {
+      console.warn("=========================================================");
+      console.warn(">>> NOTICE: No Firebase Service Account credentials found!");
+      console.warn("The database will automatically run in local fallback mode.");
+      console.warn("=========================================================");
     }
-  } else {
-    console.warn("=========================================================");
-    console.warn(">>> NOTICE: firebase-key.json file was not found!");
-    console.warn("The database will automatically run in local fallback mode.");
-    console.warn("Please place the downloaded Firebase Admin private key in:");
-    console.warn(KEY_FILE);
-    console.warn("=========================================================");
+  } catch (e) {
+    console.error(">>> Firebase Connection: FAILED.", e);
   }
 }
 
@@ -138,12 +147,16 @@ async function seedFirebaseData() {
 
 // Fallback Local File Database Helpers
 function initLocalDb() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
-  
-  if (!fs.existsSync(DB_FILE)) {
-    fs.writeFileSync(DB_FILE, JSON.stringify({ users: [initialAdmin], trips: initialTrips, bookings: [] }, null, 2), 'utf-8');
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+    
+    if (!fs.existsSync(DB_FILE)) {
+      fs.writeFileSync(DB_FILE, JSON.stringify({ users: [initialAdmin], trips: initialTrips, bookings: [] }, null, 2), 'utf-8');
+    }
+  } catch (e) {
+    console.warn(">>> Local DB initialization skipped (Read-only filesystem on Vercel):", e.message);
   }
 }
 
